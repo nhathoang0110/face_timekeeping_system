@@ -8,9 +8,7 @@
 
 ## Cài đặt
 
-### Bước 1: Tải ứng dụng từ gitlab
-
-`https://gitlab.com/is_soict/it4421_20202/1_chungdt/face_timekeeping_system.git`
+### Bước 1: Tải ứng dụng từ github
 
 ### Bước 2: Cài đặt các thư viện cần thiết
 
