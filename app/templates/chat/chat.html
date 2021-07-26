@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>Nhắn tin</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+    <!--[if lt IE 9]>
+		<script src="{{ url_for('static',filename='js/html5shiv.min.js') }}"></script>
+		<script src="{{ url_for('static',filename='js/respond.min.js') }}"></script>
+	<![endif]-->
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <div class="header">
+    <div class="header-left">
+        <a href="index.html" class="logo">
+            <img src="{{ url_for('static',filename='img/logo1.png') }}" width="35" height="35" alt=""> <span>Chấm công</span>
+        </a>
+    </div>
+    <a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>
+    <a id="mobile_btn" class="mobile_btn float-left" href="#sidebar"><i class="fa fa-bars"></i></a>
+    <ul class="nav user-menu float-right">
+
+        <li class="nav-item dropdown has-arrow">
+            <a href="#" class="dropdown-toggle nav-link user-link" data-toggle="dropdown">
+                <span class="user-img"><img class="rounded-circle" src="{{ url_for('static',filename='img/logo1.png') }}" width="40" alt="Admin">
+                    <span class="status online"></span></span>
+                <span>{{ current_user.name}}</span>
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="{{ url_for('profile.profile') }}">Trang cá nhân</a>
+                <a class="dropdown-item" href="{{ url_for('profile.update_profile') }}">Sửa thông tin</a>
+                <a class="dropdown-item" href="{{ url_for('profile.update_password') }}">Đổi mật khẩu</a>
+                <a class="dropdown-item" href="{{ url_for('auth.logout') }}">Đăng xuất</a>
+            </div>
+        </li>
+    </ul>
+</div>
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+                <div class="sidebar-menu">
+                    <ul>
+                        <li>
+                            <a href="{{ url_for('home.admin_dashboard') }}"><i class="fa fa-home back-icon"></i> <span>Quay lại trang chủ</span></a>
+                        </li>
+
+                        {%if has_user == True%}
+                        {%for user in users%}
+                        <li onclick="getChatView('{{user.id}}')">
+                            <a><span class="chat-avatar-sm user-img"><img src="{{ url_for('static',filename=user.avatar) }}" alt="" class="rounded-circle"><span class="status online"></span></span> {{user.name}}<span class="badge badge-pill bg-danger float-right">1</span></a>
+                        </li>
+                        {%endfor%}
+                        {%endif%}
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {%if has_user == True%}
+        <div class="page-wrapper">
+            <div class="chat-main-row">
+                <div class="chat-main-wrapper">
+                    <div class="col-lg-9 message-view chat-view">
+                        <div class="chat-window">
+                           <div class="fixed-header">
+                               <div class="navbar">
+                                   <div class="user-details mr-auto">
+                                       <div class="float-left user-img m-r-10">
+                                           <a href="#"><img id="img_header" src="/static/{{users[0].avatar}}" alt="" class="w-40 rounded-circle"><span class="status online"></span></a>
+                                       </div>
+                                       <div class="user-info float-left" style="margin-top: 12px;">
+                                           <a href="#"><span class="font-bold"  id="name_header">{{users[0].name}}</span></a>
+                                       </div>
+                                   </div>
+
+                               </div>
+                            </div>
+                            <div class="chat-contents">
+                                <div class="chat-content-wrap">
+                                    <div class="chat-wrap-inner">
+                                        <div class="chat-box">
+                                            <div class="chats" id="chats">
+                                                {%for mess in messages%}
+                                                    {%if mess.sender_id == current_user_id%}
+                                                        <div class="chat chat-right">
+                                                            <div class="chat-body">
+                                                                <div class="chat-bubble">
+                                                                    <div class="chat-content">
+                                                                        <p>{{mess.content}}</p>
+                                                                        <span class="chat-time">
+                                                                            {{mess.time_create.strftime("%H:%M , %d/%m")}}
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                
+                                                    {%endif%}
+
+                                                    {%if mess.sender_id != current_user_id%}
+                                                    <div class="chat chat-left">
+                                                        <div class="chat-avatar">
+                                                            <a href="#" class="avatar">
+                                                                <img alt="{{users[0].name}}" src="/static/{{users[0].avatar}}" class="img-fluid rounded-circle">
+                                                            </a>
+                                                        </div>
+                                                        <div class="chat-body">
+                                                            <div class="chat-bubble">
+                                                                <div class="chat-content">
+                                                                    <p>{{mess.content}}</p>
+                                                                    <span class="chat-time"> {{mess.time_create.strftime("%H:%M , %d/%m")}}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                
+                                                    {%endif%}
+
+                                                {%endfor%}
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chat-footer">
+                                <div class="message-bar">
+                                    <div class="message-inner">
+                                        <div class="message-area">
+                                            <div class="input-group">
+                                                <textarea placeholder="Nhập tin nhắn..." id="input_mess" style="padding: 0.469rem 0.75rem;
+                                                border-color: #eaeaea;
+                                                width: 95%;"></textarea>
+                                                <span class="input-group-append" style="width:5%;">
+													<button class="btn btn-primary" type="button" style="height: inherit" conversation_id="{{users[0].id}}" id="send_button"><i class="fa fa-send" ></i></button>
+												</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="add_group" class="modal fade">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Create a group</h3>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Groups are where your team communicates. They’re best when organized around a topic — #leads, for example.</p>
+                            <form>
+                                <div class="form-group">
+                                    <label>Group Name <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text">
+                                </div>
+                                <div class="form-group">
+                                    <label>Send invites to: <span class="text-muted-light">(optional)</span></label>
+                                    <input class="form-control" type="text">
+                                </div>
+                                <div class="m-t-50 text-center">
+                                    <button class="btn btn-primary submit-btn">Create Group</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {%endif%}
+    </div>
+    <div class="sidebar-overlay" data-reff=""></div>
+    <script src="{{ url_for('static',filename='js/jquery-3.2.1.min.js') }}"></script>
+	<script src="{{ url_for('static',filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/jquery.slimscroll.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/app.js') }}"></script>
+
+    <script src="{{ url_for('static',filename='js/socket.io.min.js') }} "></script>
+
+<script src="{{ url_for('static',filename='js/chat.js') }}"></script>
+<script type="text/javascript" charset="utf-8"></script>
+
+
+</body>
+
+</html>

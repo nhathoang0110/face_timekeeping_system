@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    
+    <title>Trang cá nhân</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+    <!--[if lt IE 9]>
+		<script src="{{ url_for('static',filename='js/html5shiv.min.js') }}"></script>
+		<script src="{{ url_for('static',filename='js/respond.min.js') }}"></script>
+	<![endif]-->
+</head>
+
+<body>
+    <div class="main-wrapper">
+     {% include 'head_side_bar_emp.html' %}
+        <div class="page-wrapper">
+            <div class="content">
+                <div class="row">
+                    <div class="col-sm-7 col-6">
+                        <h4 class="page-title">Hồ sơ</h4>
+                    </div>
+
+                    <div class="col-sm-5 col-6 text-right m-b-30">
+                        <a href="{{ url_for('profile.update_profile') }}" class="btn btn-primary btn-rounded"><i class="fa fa-plus"></i> Sửa hồ sơ</a>
+                    </div>
+                </div>
+                <div class="card-box profile-header">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="profile-view">
+                                <div class="profile-img-wrap">
+                                    <div class="profile-img">
+                                        <a href="#"><img class="avatar" src="{{ url_for('static', filename=current_user.avatar) }}" alt=""></a>
+                                    </div>
+                                </div>
+                                <div class="profile-basic">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="profile-info-left">
+                                                <h3 class="user-name m-t-0 mb-0">{{ current_user.name }}</h3>
+                                                <!-- <small class="text-muted">Hiểu</small> -->
+<!--                                                <div class="staff-id">Mã nhân viên : {{ current_user.id }}</div>-->
+                                                <!-- <div class="staff-msg"><a href="#" class="btn btn-primary">Gửi tin nhắn</a></div> -->
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <ul class="personal-info">
+                                                <li>
+                                                    <span class="title">Mã nhân viên:</span>
+                                                    <span class="text">{{ current_user.id }}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Số điện thoại:</span>
+                                                    <span class="text">{{ current_user.phone }}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Email:</span>
+                                                    <!-- <span class="text"><a href=""><span class="__cf_email__" data-cfemail="97f4e5fee4e3fef9f6f0e5f8e1f2e4d7f2eff6fae7fbf2b9f4f8fa">[email&#160;protected]</span></a></span> -->
+                                                    <span class="text">{{ current_user.mail }}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Sinh nhật:</span>
+                                                    <span class="text">{{current_user.date_of_birth}}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Lương:</span>
+                                                    <span class="text">{{current_user.salary}}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                        
+                        </div>
+                    </div>
+                </div>
+				<div class="profile-tabs">
+					<ul class="nav nav-tabs nav-tabs-bottom">
+						<li class="nav-item"><a class="nav-link active" href="#about-cont" data-toggle="tab">About</a></li>
+						<li class="nav-item"><a class="nav-link" href="#bottom-tab2" data-toggle="tab">Profile</a></li>
+						<li class="nav-item"><a class="nav-link" href="#bottom-tab3" data-toggle="tab">Messages</a></li>
+					</ul>
+
+					<div class="tab-content">
+						<div class="tab-pane show active" id="about-cont">
+						</div>
+						<div class="tab-pane" id="bottom-tab2">
+						</div>
+						<div class="tab-pane" id="bottom-tab3">
+						</div>
+					</div>
+				</div>
+            </div>
+        </div>
+    </div>
+    <div class="sidebar-overlay" data-reff=""></div>
+    <script src="{{ url_for('static',filename='js/jquery-3.2.1.min.js') }}"></script>
+	<script src="{{ url_for('static',filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/jquery.slimscroll.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/app.js') }}"></script>
+</body>
+
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+
+    <title>Lương</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/select2.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/bootstrap-datetimepicker.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+    <!--[if lt IE 9]>
+		<script src="{{ url_for('static',filename='js/html5shiv.min.js') }}"></script>
+		<script src="{{ url_for('static',filename='js/respond.min.js') }}"></script>
+	<![endif]-->
+</head>
+
+<body>
+    <div class="main-wrapper">
+        {% include 'head_side_bar_emp.html' %}
+
+
+        <div class="page-wrapper">
+            <div class="content">
+                <div class="row">
+                    <div class="col-sm-4 col-5">
+                        <h4 class="page-title">Ảnh không nhận diện: {{date}}</h4>
+                    </div>
+<!--                    <div class="col-sm-8 col-7 text-right m-b-30">-->
+<!--                        <a href="add-salary.html" class="btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Thêm lương</a>-->
+<!--                    </div>-->
+                </div>
+                <div class="row filter-row">
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div class="form-group form-focus">
+                            <label class="focus-label">Thời gian</label>
+                            <div class="cal-icon">
+                                <input class="form-control floating datetimepicker" type="text" id ="time_image">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <button class="btn btn-success btn-block" id="search_image"> Tìm kiếm </button>
+                    </div>
+                </div>
+                 <div class="page-wrapper", style="margin: auto;">
+            <div class="content">
+                <div class="row">
+                    <div class="col-sm-4 col-3">
+                        <h4 class="page-title">Danh sách ảnh</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+						<div class="table-responsive">
+                            <table class="table table-striped custom-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 16%;"></th>
+                                        <th style="width: 16%;"></th>
+                                        <th style="width: 16%;"></th>
+                                        <th style="width: 16%;"></th>
+                                        <th style="width: 16%;"></th>
+                                        <th style="width: 16%;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {%for row in paths%}
+                                    <tr>
+                                       {%for cel in row%}
+                                            <td>
+											<img width="100" height="100" src="{{cel}}" alt="">
+										</td>
+                                        {%endfor%}
+                                    </tr>
+                                {%endfor%}
+
+
+                                </tbody>
+                            </table>
+						</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                  </div>
+        </div>
+		<div id="update_salary" class="modal fade delete-modal" role="dialog">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-body text-center">
+						<h3>Nhập lương mới</h3>
+                        <br>
+						<div class="form-group form-focus">
+                            <label class="focus-label">Lương mới</label>
+                            <input type="number" class="form-control floating" id="new_salary" value="0">
+                        </div>
+                        <div class="m-t-20"> <a href="#" class="btn btn-white" onclick="hideModal()">Close</a>
+							<button type="submit" class="btn btn-danger" id="button_update">Update</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+    <div class="sidebar-overlay" data-reff=""></div>
+    <script src="{{ url_for('static',filename='js/jquery-3.2.1.min.js') }}"></script>
+	<script src="{{ url_for('static',filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/jquery.slimscroll.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/select2.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/moment.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/fullcalendar.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/dataTables.bootstrap4.min.js') }}"></script>
+    <script>
+        $(document).ready(function (e) {
+
+        $('#search_image').on('click', function () {
+    var time = $('#time_image').val()
+    console.log(time)
+    if (time != ''){
+        day = parseInt(time.split("/")[0]).toString()
+        month = parseInt(time.split("/")[1]).toString()
+        year = parseInt(time.split("/")[2]).toString()
+        window.location.assign('http://localhost:5000/get_stranger?m='+month+'&y='+year+'&d='+day)
+    }
+
+    });
+});
+    </script>
+</body>
+
+</html>

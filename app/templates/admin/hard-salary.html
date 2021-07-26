@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+
+    <title>Lương</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/select2.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/bootstrap-datetimepicker.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+    <!--[if lt IE 9]>
+		<script src="{{ url_for('static',filename='js/html5shiv.min.js') }}"></script>
+		<script src="{{ url_for('static',filename='js/respond.min.js') }}"></script>
+	<![endif]-->
+</head>
+
+<body>
+    <div class="main-wrapper">
+        {% include 'head_side_bar.html' %}
+
+
+        <div class="page-wrapper">
+            <div class="content">
+                <div class="row">
+                    <div class="col-sm-4 col-5">
+                        <h4 class="page-title">Lương cứng</h4>
+                    </div>
+<!--                    <div class="col-sm-8 col-7 text-right m-b-30">-->
+<!--                        <a href="add-salary.html" class="btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Thêm lương</a>-->
+<!--                    </div>-->
+                </div>
+                <div class="row filter-row">
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div class="form-group form-focus">
+                            <label class="focus-label">Tên nhân viên</label>
+                            <input type="text" class="form-control floating" id="emp_name_hard">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <button class="btn btn-success btn-block" id="search_hard_salary"> Tìm kiếm </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped custom-table datatable">
+                                <thead>
+                                    <tr>
+                                        <th style="width:25%;">Nhân viên</th>
+                                        <th>Mã nhân viên</th>
+                                        <th>Email</th>
+                                        <th>Thông tin lương</th>
+                                        <th class="text-right">Hoạt động</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="list_salary">
+                                {% for user in data %}
+                                    <tr>
+                                        <td>
+											<img class="rounded-circle" src="{{url_for('static', filename='img/avatar/user.jpg')}}" height="28" width="28" alt=""> {{user.name}}
+                                        </td>
+                                        <td>{{user.id}}</td>
+                                        <td>{{user.mail}}</td>
+                                        <td>{{"{:,}".format(user.salary)}} VND</td>
+                                        <td class="text-right">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item" href="#" onclick="showModal('{{user.id}}')"><i class="fa fa-pencil m-r-5"></i> Sửa</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor%}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<div id="update_salary" class="modal fade delete-modal" role="dialog">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-body text-center">
+						<h3>Nhập lương mới</h3>
+                        <br>
+						<div class="form-group form-focus">
+                            <label class="focus-label">Lương mới</label>
+                            <input type="number" class="form-control floating" id="new_salary" value="0">
+                        </div>
+                        <div class="m-t-20"> <a href="#" class="btn btn-white" onclick="hideModal()">Close</a>
+							<button type="submit" class="btn btn-danger" id="button_update">Update</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+    <div class="sidebar-overlay" data-reff=""></div>
+    <script src="{{ url_for('static',filename='js/jquery-3.2.1.min.js') }}"></script>
+	<script src="{{ url_for('static',filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/jquery.slimscroll.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/select2.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/moment.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/fullcalendar.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/salary.js') }}"></script>
+</body>
+
+</html>

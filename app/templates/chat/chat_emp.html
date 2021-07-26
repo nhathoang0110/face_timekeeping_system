@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>Nhắn tin</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+    <!--[if lt IE 9]>
+		<script src="{{ url_for('static',filename='js/html5shiv.min.js') }}"></script>
+		<script src="{{ url_for('static',filename='js/respond.min.js') }}"></script>
+	<![endif]-->
+</head>
+
+<body>
+    <div class="main-wrapper">
+        {% include 'head_side_bar_emp.html' %}
+<!--        -->
+        <div class="page-wrapper">
+            <div class="chat-main-row">
+                <div class="chat-main-wrapper">
+                    <div class="col-lg-9 message-view chat-view">
+                        <div class="chat-window">
+                            <div class="fixed-header">
+                                <div class="navbar">
+                                    <div class="user-details mr-auto">
+                                        <div class="float-left user-img m-r-10">
+                                            <a href="#"><img src="/static/{{admin.avatar}}" alt="" class="w-40 rounded-circle"><span class="status online"></span></a>
+                                        </div>
+                                        <div class="user-info float-left" style="margin-top: 12px;">
+                                            <a href="#"><span class="font-bold" >{{admin.name}}</span></a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="chat-contents">
+                                <div class="chat-content-wrap">
+                                    <div class="chat-wrap-inner">
+                                        <div class="chat-box">
+                                            <div class="chats" id="chats">
+                                                {%for mess in messages%}
+                                                    {%if mess.sender_id != admin.id%}
+                                                        <div class="chat chat-right">
+                                                            <div class="chat-body">
+                                                                <div class="chat-bubble">
+                                                                    <div class="chat-content">
+                                                                        <p>{{mess.content}}</p>
+                                                                        <span class="chat-time">
+                                                                            {{mess.time_create.strftime("%H:%M , %d/%m")}}
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                
+                                                    {%endif%}
+
+                                                    {%if mess.sender_id == admin.id%}
+                                                    <div class="chat chat-left">
+                                                        <div class="chat-avatar">
+                                                            <a href="#" class="avatar">
+                                                                <img alt="{{admin.name}}" src="/static/{{admin.avatar}}" class="img-fluid rounded-circle">
+                                                            </a>
+                                                        </div>
+                                                        <div class="chat-body">
+                                                            <div class="chat-bubble">
+                                                                <div class="chat-content">
+                                                                    <p>{{mess.content}}</p>
+                                                                    <span class="chat-time"> {{mess.time_create.strftime("%H:%M , %d/%m")}}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                
+                                                    {%endif%}
+
+                                                {%endfor%}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chat-footer">
+                                <div class="message-bar">
+                                    <div class="message-inner">
+                                        <div class="message-area">
+                                            <div class="input-group">
+                                                <textarea placeholder="Nhập tin nhắn..." id="input_mess" style="padding: 0.469rem 0.75rem;
+                                                border-color: #eaeaea;
+                                                width: 95%;"></textarea>
+                                                <span class="input-group-append" style="width:5%;">
+													<button class="btn btn-primary" type="button" id="send_button" style="height: inherit"><i class="fa fa-send" ></i></button>
+												</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="add_group" class="modal fade">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Create a group</h3>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Groups are where your team communicates. They’re best when organized around a topic — #leads, for example.</p>
+                            <form>
+                                <div class="form-group">
+                                    <label>Group Name <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text">
+                                </div>
+                                <div class="form-group">
+                                    <label>Send invites to: <span class="text-muted-light">(optional)</span></label>
+                                    <input class="form-control" type="text">
+                                </div>
+                                <div class="m-t-50 text-center">
+                                    <button class="btn btn-primary submit-btn">Create Group</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sidebar-overlay" data-reff=""></div>
+    <script src="{{ url_for('static',filename='js/jquery-3.2.1.min.js') }}"></script>
+	<script src="{{ url_for('static',filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/jquery.slimscroll.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/app.js') }}"></script>
+<!-- <script src="{{ url_for('static',filename='js/chat.html.js') }}"></script> -->
+<script src="{{ url_for('static',filename='js/socket.io.min.js') }} "></script>
+<script src="{{ url_for('static',filename='js/chat_emp.js') }}"></script>
+<script type="text/javascript" charset="utf-8"></script>
+</body>
+
+</html>

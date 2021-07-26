@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    
+    <title>Thêm nhân viên</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/fullcalendar.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/select2.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/bootstrap-datetimepicker.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+    <!--[if lt IE 9]>
+		<script src="{{ url_for('static',filename='js/html5shiv.min.js') }}"></script>
+		<script src="{{ url_for('static',filename='js/respond.min.js') }}"></script>
+	<![endif]-->
+</head>
+
+<body>
+    <div class="main-wrapper">
+{% include 'head_side_bar.html' %}
+    <div id="modalLoading" class="modal fade bd-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" style="width: 48px">
+            <span class="fa fa-spinner fa-spin fa-3x"></span>
+        </div>
+    </div>
+</div>
+
+
+        <div class="page-wrapper">
+            <div class="content">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h4 class="page-title">Thêm nhân viên</h4>
+                    </div>
+                </div>
+
+                {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            <div class="notification is-danger">
+                                {{ messages[0] }}
+                            </div>
+                {% endif %}
+                {% endwith %}
+
+                <form action="/admin/register" method="POST" enctype="multipart/form-data">
+                    <div class="card-box">
+                        <h3 class="card-title">Thông tin cơ bản</h3>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="profile-img-wrap">
+                                    <img class="inline-block" src="{{url_for('static', filename='img/avatar/user.jpg')}}" alt="user">
+<!--                                    <div class="fileupload btn">-->
+<!--                                        <span class="btn-text">edit</span>-->
+<!--                                        <input class="upload" type="file">-->
+<!--                                    </div>-->
+                                </div>
+                                <div class="profile-basic">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus">
+                                                <label class="focus-label">Họ và tên</label>
+                                                <input type="text" class="form-control floating" value="" name="fullname" id="fullname">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus">
+                                                <label class="focus-label">Email</label>
+                                                <input type="text" class="form-control floating" value="" name="mail" id="mail">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-focus">
+                                                <label class="focus-label">Ngày sinh</label>
+                                                <div class="cal-icon">
+                                                    <input class="form-control floating datetimepicker" type="text" value="" id="date_of_birth" name="date_of_birth">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                           <div class="form-group form-focus">
+                                                <label class="focus-label">Số điện thoại</label>
+                                                <input type="text" class="form-control floating" value="" name="phone" id = "phone">
+                                            </div>
+                                        </div>
+                                                                            <div class="col-md-6">
+                                           <div class="form-group form-focus">
+                                                <label class="focus-label">Lương cứng</label>
+                                                <input type="number" class="form-control floating" value="" name="salary" id="salary">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-box">
+                        <h3 class="card-title">Ảnh nhận diện</h3>
+                        <div class="row">
+                             <div class="col-md-6">
+                                <h4>Ảnh 1</h4>
+                                <div class="form-group form-focus">
+                                    <input class="upload" type="file" name="file1" id= "file1">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h4>Ảnh 2</h4>
+                                <div class="form-group form-focus">
+                                    <input class="upload" type="file" name="file2" id= "file2">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h4>Ảnh 3</h4>
+                                <div class="form-group form-focus">
+                                    <input class="upload" type="file" name="file3" id="file3">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group text-center">
+                            <button type="button" class="btn btn-primary account-btn" id="register">Register</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static',filename='js/jquery-3.2.1.min.js') }}"></script>
+	<script src="{{ url_for('static',filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/jquery.slimscroll.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/select2.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/moment.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/auth.js') }}"></script>
+</body>
+
+</html>

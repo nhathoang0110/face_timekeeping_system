@@ -1,0 +1,239 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    
+    <title>Danh sách nhân viên</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/select2.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/bootstrap-datetimepicker.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+    <!--[if lt IE 9]>
+		<script src="{{ url_for('static',filename='js/html5shiv.min.js') }}"></script>
+		<script src="{{ url_for('static',filename='js/respond.min.js') }}"></script>
+	<![endif]-->
+</head>
+
+<body>
+    <div class="main-wrapper">
+        {% include 'head_side_bar.html' %}
+
+        <div class="page-wrapper">
+            <div class="content">
+                <div class="row">
+                    <div class="col-sm-4 col-3">
+                        <h4 class="page-title">Nhân viên</h4>
+                    </div>
+                    <div class="col-sm-8 col-9 text-right m-b-20">
+                        <a href="{{ url_for('admin.register') }}" class="btn btn-primary float-right btn-rounded"><i class="fa fa-plus"></i> Thêm nhân viên</a>
+                    </div>
+                </div>
+                <div class="row filter-row">
+                    <div class="col-sm-6 col-md-3">
+<!--                        <div class="form-group form-focus">-->
+<!--                            <label class="focus-label">Mã nhân viên</label>-->
+<!--                            <input type="text" class="form-control floating" id="id_emp_search">-->
+<!--                        </div>-->
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="form-group form-focus">
+                            <label class="focus-label">Tên nhân viên</label>
+                            <input type="text" class="form-control floating" id ="name_emp_search">
+                        </div>
+                    </div>
+<!--                    <div class="col-sm-6 col-md-3">-->
+<!--                        <div class="form-group form-focus select-focus">-->
+<!--                            <label class="focus-label">Vị trí</label>-->
+<!--                            <select class="select floating">-->
+<!--                                <option>Chủ tịch</option>-->
+<!--                                <option>Giám đốc</option>-->
+<!--                                <option>Trưởng phòng</option>-->
+<!--                                <option>Nhân viên</option>-->
+<!--                                <option>Bảo vệ</option>-->
+<!--                                <option>Lập trình viên</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                    <div class="col-sm-6 col-md-3" id="search_emp">
+                        <button class="btn btn-success btn-block" > Tìm kiếm </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+						<div class="table-responsive">
+                            <table class="table table-striped custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>Tên nhân viên</th>
+                                        <th>Mã nhân viên</th>
+                                        <th>Email</th>
+                                        <th>Số điện thoại</th>
+                                        <th style="min-width: 110px;">Ngày sinh</th>
+<!--                                        <th>Vị trí</th>-->
+                                        <th class="text-right">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="list_emp">
+                                    {% for user in users %}
+
+                                    <tr>
+                                        <td>
+											<img width="28" height="28" src="{{url_for('static', filename='img/avatar/user.jpg')}}" class="rounded-circle" alt="">
+                                            <h2>{{user.name}}</h2>
+										</td>
+                                        <td>{{user.id}}</td>
+                                        <td>{{user.mail}}</td>
+                                        <td>{{user.phone}}</td>
+                                        <td>{{user.date_of_birth}}</td>
+<!--                                        <td>-->
+<!--                                            <span class="custom-badge status-green">Nurse</span>-->
+<!--                                        </td>-->
+                                        <td class="text-right">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item" href="{{url_for('admin.update_emp', id = user.id)}}"><i class="fa fa-pencil m-r-5"></i> Chỉnh sửa</a>
+                                                    <a class="dropdown-item" href="#" onclick="showModalImg('{{user.id}}')"><i class="fa fa-eye m-r-5"></i> Xem ảnh</a>
+                                                    <a class="dropdown-item" href="#" onclick="showModal('{{user.id}}')"><i class="fa fa-trash-o m-r-5"></i> Xóa</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    {% endfor %}
+
+									<!-- <tr>
+                                        <td>
+											<img width="28" height="28" src="assets/img/user.jpg" class="rounded-circle" alt=""> <h2>Nguyên Nhật Hoàng</h2>
+										</td>
+                                        <td>SF-0003</td>
+                                        <td><a href="http://cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="731e12010a1e16011a101f1633160b121e031f165d101c1e">[email&#160;protected]</a></td>
+                                        <td>603-831-4983</td>
+                                        <td>27 Dec 2017</td>
+                                        <td>
+                                            <span class="custom-badge status-grey">Chủ tịch</span>
+                                        </td>
+                                        <td class="text-right">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item" href="edit-employee.html"><i class="fa fa-pencil m-r-5"></i> Chỉnh sửa</a>
+                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Xóa</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+
+									<tr>
+                                        <td>
+											<img width="28" height="28" src="assets/img/user.jpg" class="rounded-circle" alt=""> <h2>Nguyên Văn Hùng</h2>
+										</td>
+                                        <td>SF-0002</td>
+                                        <td><a href="http://cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9ff7fee6f3f6faf9fafaf1fae6dffae7fef2eff3fab1fcf0f2">[email&#160;protected]</a></td>
+                                        <td>616-774-4962</td>
+                                        <td>21 Apr 2017</td>
+                                        <td>
+                                            <span class="custom-badge status-grey">Lập trình viên</span>
+                                        </td>
+                                        <td class="text-right">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item" href="edit-employee.html"><i class="fa fa-pencil m-r-5"></i> Chỉnh sửa</a>
+                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Xóa</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+
+									<tr>
+                                        <td>
+											<img width="28" height="28" src="assets/img/user.jpg" class="rounded-circle" alt=""> <h2>Mai Văn Hòa</h2>
+										</td>
+                                        <td>SF-0001</td>
+                                        <td><a href="http://cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d7adb8b2b5a2a3bbb2a597b2afb6baa7bbb2f9b4b8ba">[email&#160;protected]</a></td>
+                                        <td>444-555-9999</td>
+                                        <td>19 May 2012</td>
+                                        <td>
+                                            <span class="custom-badge status-grey">Lập trình viên</span>
+                                        </td>
+                                        <td class="text-right">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item" href="edit-employee.html"><i class="fa fa-pencil m-r-5"></i> Chỉnh sửa</a>
+                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Xóa</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr> -->
+
+
+
+                                </tbody>
+                            </table>
+						</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<div id="delete_employee" class="modal fade delete-modal" role="dialog">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-body text-center">
+<!--						<img src="assets/img/sent.png" alt="" width="50" height="46">-->
+						<h3>Bạn có chắc chắn muốn xóa nhân viên này?</h3>
+						<div class="m-t-20"> <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
+							<button type="submit" class="btn btn-danger" id="button_del">Delete</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+            <div id="modalLoading" class="modal fade bd-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" style="width: 48px">
+            <span class="fa fa-spinner fa-spin fa-3x"></span>
+        </div>
+    </div>
+</div>
+
+        		<div id="image_employee" class="modal fade delete-modal" role="dialog">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-body text-center">
+<!--						<img src="assets/img/sent.png" alt="" width="50" height="46">-->
+						<img  id="image_user_1" class = "image_user">
+                        <img  id="image_user_2" class = "image_user">
+                        <img  id="image_user_3" class = "image_user">
+<!--                        src="/static/img/avatar/user.jpg"-->
+						<div class="m-t-20"> <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+    </div>
+    <div class="sidebar-overlay" data-reff=""></div>
+    <script src="{{ url_for('static',filename='js/jquery-3.2.1.min.js') }}"></script>
+	<script src="{{ url_for('static',filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/jquery.slimscroll.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/select2.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/moment.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/emp_manager.js') }}"></script>
+</body>
+
+</html>

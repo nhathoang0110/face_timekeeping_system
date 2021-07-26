@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+
+    <title>Tạo lịch chấm công</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/select2.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/bootstrap-datetimepicker.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+    <!--[if lt IE 9]>
+		<script src="{{ url_for('static',filename='js/html5shiv.min.js') }}"></script>
+		<script src="{{ url_for('static',filename='js/respond.min.js') }}"></script>
+	<![endif]-->
+</head>
+
+<body>
+    <div class="main-wrapper">
+        {% include 'head_side_bar.html' %}
+<!--        <div class="header">-->
+<!--			<div class="header-left">-->
+<!--				<a href="index.html" class="logo">-->
+<!--					<img src="{{ url_for('static',filename='img/logo1.png') }}" width="35" height="35" alt=""> <span>Chấm công</span>-->
+<!--				</a>-->
+<!--			</div>-->
+<!--			<a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>-->
+<!--            <a id="mobile_btn" class="mobile_btn float-left" href="#sidebar"><i class="fa fa-bars"></i></a>-->
+<!--            <ul class="nav user-menu float-right">-->
+<!--                <li class="nav-item dropdown has-arrow">-->
+<!--                    <a href="#" class="dropdown-toggle nav-link user-link" data-toggle="dropdown">-->
+<!--                        <span class="user-img"><img class="rounded-circle" src="{{ url_for('static',filename='img/user.jpg') }}" width="40" alt="Admin">-->
+<!--							<span class="status online"></span></span>-->
+<!--                        <span>Nguyễn Hiểu</span>-->
+<!--                    </a>-->
+<!--					<div class="dropdown-menu">-->
+<!--						<a class="dropdown-item" href="{{ url_for('profile.profile') }}">Trang cá nhân</a>-->
+<!--                        <a class="dropdown-item" href="{{ url_for('profile.update_profile') }}">Sửa thông tin</a>-->
+<!--                        <a class="dropdown-item" href="{{ url_for('profile.update_password') }}">Đổi mật khẩu</a>-->
+<!--                        <a class="dropdown-item" href="{{ url_for('auth.logout') }}">Đăng xuất</a>-->
+<!--					</div>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--        <div class="sidebar" id="sidebar">-->
+<!--            <div class="sidebar-inner slimscroll">-->
+<!--                <div id="sidebar-menu" class="sidebar-menu">-->
+<!--                    <ul>-->
+<!--                        <li class="menu-title">Main</li>-->
+<!--                        <li>-->
+<!--                            <a href="{{url_for('home.admin_dashboard')}}"><i class="fa fa-dashboard"></i> <span>Trang chủ</span></a>-->
+<!--                        </li>-->
+<!--						<li class="submenu">-->
+<!--							<a href="#"><i class="fa fa-user"></i> <span> Nhân viên </span> <span class="menu-arrow"></span></a>-->
+<!--							<ul style="display: none;">-->
+<!--								<li><a href="{{ url_for('admin.get_all_emp') }}">Danh sách nhân viên</a></li>-->
+<!--							</ul>-->
+<!--						</li>-->
+<!--						<li class="submenu">-->
+<!--							<a href="#"><i class="fa fa-money"></i> <span> Quản lý chấm công </span> <span class="menu-arrow"></span></a>-->
+<!--							<ul style="display: none;">-->
+<!--								<li><a href="{{ url_for('admin.get_logs') }}">Thống kê</a></li>-->
+<!--							</ul>-->
+<!--						</li>-->
+<!--						<li class="submenu">-->
+<!--							<a href="#"><i class="fa fa-book"></i> <span> Quản lý lương </span> <span class="menu-arrow"></span></a>-->
+<!--							<ul style="display: none;">-->
+<!--                                <li><a href="{{ url_for('admin.cal_salary') }}"> Tính lương </a></li>-->
+<!--                                <li><a href="{{ url_for('admin.get_salaries')}}"> Thống kê lương </a></li>-->
+<!--                                <li><a href="{{ url_for('admin.get_hard_salaries')}}"> Thông tin lương cứng </a></li>-->
+<!--							</ul>-->
+<!--						</li>-->
+<!--                        <li class="submenu">-->
+<!--							<a href="#"><i class="fa fa-flag-o"></i> <span> Quản lý tạo chấm công    </span> <span class="menu-arrow"></span></a>-->
+<!--							<ul style="display: none;">-->
+<!--                                <li><a href="{{ url_for('admin.schedule')}}"> Tạo lịch chấm công </a></li>-->
+<!--								-->
+<!--							</ul>-->
+<!--						</li>-->
+<!--                        <li>-->
+<!--                            <a href="#"><i class="fa fa-comments"></i> <span>Chat</span> <span class="badge badge-pill bg-primary float-right">5</span></a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+
+
+        <form action="/admin/schedule" method="POST">
+        <div class="page-wrapper">
+            <div class="content">
+                <div class="row">
+                    <div class="col-sm-4 col-5">
+                        <h4 class="page-title">Lịch chấm công hiện tại</h4>
+                    </div>
+
+
+                    <div class="col-sm-4 col-5">
+                        <h4 class="page-title">Tạo lịch chấm công</h4>
+                        {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            <div class="notification is-danger" style="color: red;">
+                                {{ messages[0] }}
+                            </div>
+                        {% endif %}
+                        {% endwith %}
+                    </div>
+
+
+                </div>
+
+                <div class="row filter-row">
+
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div class="form-group form-focus">
+                            <h5>Ngày bắt đầu:<br> {{ current_schedule['start_date'] }}</h5>
+                   
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div class="form-group form-focus">
+                            <h5>Ngày kết thúc:<br> {{ current_schedule['end_date'] }}</h5>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div class="form-group form-focus">
+                            <label class="focus-label">Ngày bắt đầu</label>
+                            <div class="cal-icon">
+                                <input class="form-control floating datetimepicker" type="text" name='start_date'>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div class="form-group form-focus">
+                            <label class="focus-label">Ngày kết thúc</label>
+                            <div class="cal-icon">
+                                <input class="form-control floating datetimepicker" type="text" name="end_date">
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="row filter-row">
+
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div class="form-group form-focus">
+                            <h5>Cam bật sáng: <br> {{ current_schedule['start_time_in'] }}</h5>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div class="form-group form-focus">
+                            <h5>Cam tắt sáng:<br>  {{ current_schedule['end_time_in'] }}</h5>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div class="form-group form-focus">
+                            <label class="focus-label">Cam bật sáng</label>
+                            <input type="time" class="form-control floating" name="start_time_in">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div class="form-group form-focus">
+                            <label class="focus-label">Cam tắt sáng</label>
+                            <input type="time" class="form-control floating" name="end_time_in">
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="row filter-row">
+
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div class="form-group form-focus">
+                            <h5>Cam bật chiều: <br> {{ current_schedule['start_time_out'] }}</h5>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div class="form-group form-focus">
+                            <h5>Cam tắt chiều: <br> {{ current_schedule['end_time_out'] }}</h5>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div class="form-group form-focus">
+                            <label class="focus-label">Cam bật chiều</label>
+                            <input type="time" class="form-control floating" name="start_time_out">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div class="form-group form-focus">
+                            <label class="focus-label">Cam tắt chiều</label>
+                            <input type="time" class="form-control floating" name="end_time_out">
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="row filter-row">
+
+
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div class="form-group form-focus">
+                            <h5>Thời điểm vào làm: <br> {{ current_schedule['correct_time_in'] }}</h5>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div class="form-group form-focus">
+                            <h5>Thời điểm tan ca: <br> {{ current_schedule['correct_time_out'] }}</h5>
+                        </div>
+                    </div>
+
+                    
+                   <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div class="form-group form-focus">
+                            <label class="focus-label">Thời điểm vào làm</label>
+                            <input type="time" class="form-control floating" name="correct_time_in">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div class="form-group form-focus">
+                            <label class="focus-label">Thời điểm tan ca</label>
+                            <input type="time" class="form-control floating" name="correct_time_out">
+                        </div>
+                    </div>
+
+                </div>
+
+
+                 <div class="row filter-row">
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        
+                    </div>
+
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        
+                    </div>
+
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        
+                    </div>
+
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <button class="btn btn-success btn-block"> Tạo lịch chấm công </button>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+        </form>
+
+
+
+		<div id="delete_salary" class="modal fade delete-modal" role="dialog">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-body text-center">
+						<img src="assets/img/sent.png" alt="" width="50" height="46">
+						<h3>Are you sure want to delete this Salary?</h3>
+						<div class="m-t-20"> <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
+							<button type="submit" class="btn btn-danger">Delete</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+    <div class="sidebar-overlay" data-reff=""></div>
+    <script src="{{ url_for('static',filename='js/jquery-3.2.1.min.js') }}"></script>
+	<script src="{{ url_for('static',filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/jquery.slimscroll.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/select2.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/moment.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/fullcalendar.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/dataTables.bootstrap4.min.js') }}"></script>
+</body>
+
+</html>

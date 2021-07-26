@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+
+    <title>Lương</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/select2.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/bootstrap-datetimepicker.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+    <!--[if lt IE 9]>
+		<script src="{{ url_for('static',filename='js/html5shiv.min.js') }}"></script>
+		<script src="{{ url_for('static',filename='js/respond.min.js') }}"></script>
+	<![endif]-->
+</head>
+
+<body>
+    <div class="main-wrapper">
+        {% include 'head_side_bar_emp.html' %}
+
+
+        <div class="page-wrapper">
+            <div class="content">
+                <div class="row">
+                    <div class="col-sm-4 col-5">
+                        <h4 class="page-title">Lương tháng</h4>
+                    </div>
+<!--                    <div class="col-sm-8 col-7 text-right m-b-30">-->
+<!--                        <a href="add-salary.html" class="btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Thêm lương</a>-->
+<!--                    </div>-->
+                </div>
+                <div class="row filter-row">
+<!--                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">-->
+<!--                        <div class="form-group form-focus">-->
+<!--                            <label class="focus-label">Tên nhân viên</label>-->
+<!--                            <input type="text" class="form-control floating">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">-->
+<!--                        <div class="form-group form-focus">-->
+<!--                            <label class="focus-label">From</label>-->
+<!--                            <div class="cal-icon">-->
+<!--                                <input class="form-control floating datetimepicker" type="text">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">-->
+<!--                        <div class="form-group form-focus">-->
+<!--                            <label class="focus-label">To</label>-->
+<!--                            <div class="cal-icon">-->
+<!--                                <input class="form-control floating datetimepicker" type="text">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">-->
+<!--                        <a href="#" class="btn btn-success btn-block"> Tìm kiếm </a>-->
+<!--                    </div>-->
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped custom-table datatable">
+                                <thead>
+                                    <tr>
+                                        <th>Năm</th>
+                                        <th>Tháng</th>
+                                        <th>Số ngày làm</th>
+                                        <th>Số ngày đến muộn</th>
+                                        <th>Số ngày về sớm</th>
+                                        <th>Tổng lương</th>
+<!--                                        <th class="text-right">Hoạt động</th>-->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for sal in data %}
+                                    <tr>
+
+<!--                                        <td>-->
+<!--											<img class="rounded-circle" src="{{ url_for('static',filename=sal['avatar']) }}" height="28" width="28" alt=""> {{sal['username']}}-->
+<!--                                        </td>-->
+                                        <td>{{sal['year']}}</td>
+                                        <td>{{sal['month']}}</td>
+                                        <td>{{sal['num_log']}}</td>
+                                        <td>{{sal['in_late']}}</td>
+                                        <td>{{sal['out_early']}}</td>
+                                        <td>{{"{:,}".format(sal['salary'])}} VNĐ</td>
+<!--                                        <td class="text-right">-->
+<!--                                            <div class="dropdown dropdown-action">-->
+<!--                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>-->
+<!--                                                <div class="dropdown-menu dropdown-menu-right">-->
+<!--                                                    <a class="dropdown-item" href="edit-salary.html"><i class="fa fa-pencil m-r-5"></i> Sửa</a>-->
+<!--                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_salary"><i class="fa fa-trash-o m-r-5"></i> Xóa</a>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </td>-->
+
+                                    </tr>
+                                {% endfor%}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<div id="delete_salary" class="modal fade delete-modal" role="dialog">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-body text-center">
+						<img src="assets/img/sent.png" alt="" width="50" height="46">
+						<h3>Are you sure want to delete this Salary?</h3>
+						<div class="m-t-20"> <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
+							<button type="submit" class="btn btn-danger">Delete</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+    <div class="sidebar-overlay" data-reff=""></div>
+    <script src="{{ url_for('static',filename='js/jquery-3.2.1.min.js') }}"></script>
+	<script src="{{ url_for('static',filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/jquery.slimscroll.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/select2.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/moment.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/fullcalendar.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/dataTables.bootstrap4.min.js') }}"></script>
+</body>
+
+</html>

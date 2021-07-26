@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+
+    <title>Danh sách nhân viên</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/select2.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/bootstrap-datetimepicker.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+    <!--[if lt IE 9]>
+		<script src="{{ url_for('static',filename='js/html5shiv.min.js') }}"></script>
+		<script src="{{ url_for('static',filename='js/respond.min.js') }}"></script>
+	<![endif]-->
+</head>
+
+<body>
+    <div class="main-wrapper">
+        {% include 'head_side_bar.html' %}
+
+        <div class="page-wrapper">
+            <div class="content">
+                <div class="row">
+                    <div class="col-sm-4 col-3">
+                        <h4 class="page-title">Tìm kiếm lịch sử chấm công nhân viên</h4>
+                    </div>
+                </div>
+                <div class="row filter-row">
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div class="form-group form-focus">
+                            <label class="focus-label">Mã nhân viên</label>
+                            <input type="number" class="form-control floating" id="emp_id_search">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <div class="form-group form-focus">
+                            <label class="focus-label">Thời gian</label>
+                            <div class="cal-icon">
+                                <input class="form-control floating datetimepicker" type="text" id ="time_search">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                        <a href="#" class="btn btn-success btn-block" id = "log_emp_search"> Tìm kiếm </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+						<div class="table-responsive">
+                            <table class="table table-striped custom-table">
+                                <thead>
+                                    <tr>
+<!--                                        <th>Tên nhân viên</th>-->
+                                        <th>Mã nhân viên</th>
+                                        <th>Ngày</th>
+                                        <th>Time Checkin</th>
+                                        <th>Time Checkout</th>
+                                        <th>Tag Checkin</th>
+                                        <th>Tag Checkout</th>
+                                        <th class="text-right">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="show_log_emp">
+
+                                </tbody>
+                            </table>
+						</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<div id="update_log_modal" class="modal fade delete-modal" role="dialog">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+
+
+					<div class="modal-body text-center">
+                        <div id="time_update">
+                        <div class="form-group form-focus">
+                            <label class="focus-label">Ngày bắt đầu</label>
+                            <div class="cal-icon">
+                                <input class="form-control floating datetimepicker" type="text">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group form-focus">
+                            <label class="focus-label">Cam bật sáng</label>
+                            <input type="time" class="form-control floating">
+                        </div>
+                            </div>
+
+						<div class="m-t-20"> <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
+							<button type="submit" class="btn btn-danger" id="button_update_log">Update</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+    </div>
+    <div class="sidebar-overlay" data-reff=""></div>
+    <script src="{{ url_for('static',filename='js/jquery-3.2.1.min.js') }}"></script>
+	<script src="{{ url_for('static',filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/jquery.slimscroll.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/select2.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/moment.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/log.js') }}"></script>
+</body>
+
+</html>
